@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-d&g+l=si64+@diirn&io^f=fxrz+a$3mwc!k5zt$xhhvm-%ms2'
-
+CSRF_TRUSTED_ORIGINS = []
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -123,7 +123,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_DIRS = [
     os.path.join(BASE_DIR,'static' )
+# LOGIN_URL
+# LOGOUT_REDIRECT_URL = 'recipe_site_app:index'
 
+# LOGOUT_REDIRECT_URL = 'recipe_site_app:index'
 
 ]
 # Default primary key field type'
