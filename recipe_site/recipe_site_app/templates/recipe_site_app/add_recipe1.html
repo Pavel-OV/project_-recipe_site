@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Добавить рецепт{% endblock %}
+{% block content %}
+
+
+
+</div><div class="form section container mt-3 justify-content-center d-flex">
+
+
+    <div class="col-lg-4 col-sm-12">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" tabindex="-1">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+
+        <h3>Добавить новый рецепт</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+           
+            {{form.as_p}}
+            <button type="submit" class="btn btn-outline-success">Внести рецепт в БД</button>
+
+        </form>
+
+    </div>
+{% endblock %}

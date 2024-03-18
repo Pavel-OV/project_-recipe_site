@@ -27,11 +27,12 @@
     <div id="menu">
       <ul>
 
-        <li class="active"><a href="{% url 'recipe_site_app:index' %}">Главная</a></li>
+       
         <li><a href="{% url 'recipe_site_app:index' %}">Все рецепты</a></li>
 
         {% if user.is_authenticated %}
         <li><a href="#">Мои рецепты</a></li>
+        <li><a href="{% url 'recipe_site_app:add_recipe' %}">Добавить рецепт</a></li>
         <li><a href="#">Обновить профиль</a></li>
         <li class="nav-item list-unstyled ">
           <form method="post" action="{% url 'users:logout' %}">
