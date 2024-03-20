@@ -7,6 +7,10 @@ app_label = 'recipe_site_app'
 class Category(models.Model):
     title_category = models.CharField(max_length=200,  unique=True)
 
+    class Meta:
+        verbose_name_plural = "Категории рецептов"
+        verbose_name = "категории рецептов"
+
     def __str__(self):
         return f'{self.title_category}'
 
@@ -34,6 +38,10 @@ class Recipes(models.Model):
                                                 verbose_name="Время публиуации")
     date_of_editing = models.DateTimeField(auto_now=True,
                                            verbose_name="Публикация отредактирована")
+    
+    class Meta:
+        verbose_name_plural = "Рецепты"
+        verbose_name = "рецепт"
 
    
     def __str__(self):
