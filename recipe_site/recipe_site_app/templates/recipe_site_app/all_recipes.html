@@ -4,17 +4,17 @@
 
 {% block content %}
 <section >
-    
+    <div >
         {% for recipe in recipes %}
-        <div container>
-            <hr />
+        <div >
+            <hr >
             <div >
                 <div >
                     <p>Автор: {{ recipe.author }}</p>
                 </div>
                 <div >
-                      
-                     </a>
+                      <a href="{% url 'recipe_site_app:all_user_recipes' author_id=recipe.author.pk %}"
+                       > Все рецепты {{ recipe.author }}</a>
                 </div>
                 <div >
                     <p>Просмотров: {{ recipe.views }}</p>
@@ -25,20 +25,20 @@
                 <hr >
             </div>
             <div >
-                <div class=>
+                <div >
                     {% if recipe.picture %}
                     <img src="{{ recipe_site_app.image.url }}"
-                         class="d-block " height="415px">
+                          height="415px">
                     {% else %}
                     <p>no image</p>
                     {% endif %}
 
                 </div>
-                <div class="col">
+                <div >
                     <h3>{{ recipe.title }}</h3>
                     <p>{{ recipe.description }}</p>
                     
-                      Подробнее
+                     Подробнее</a>
                 </div>
 
             </div>
