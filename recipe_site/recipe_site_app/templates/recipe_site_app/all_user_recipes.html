@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Рецепты по автору{% endblock %}
+
+
+{% block content %}
+<section >
+    <div >
+        {% for recipe in recipes %}
+        <div >
+            <hr >
+            <div >
+                <div >
+                    <p>Время готовки: {{ recipe.cooking_time }} мин.</p>
+                </div>
+                <div >
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div >
+                    <p>Обновлено: {{ recipe.date_of_editing}}</p>
+                </div>
+                <hr >
+            </div>
+            <div >
+                <div >
+                    {% if recipe.image %}
+                    <img src="{{ recipe_site_app.image.url }}"
+                          height="415px">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div >
+                    <p>{{ recipe.description }}</p>
+                     Подробнее
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
