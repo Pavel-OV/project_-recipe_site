@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import  render
 from django.core.files.storage import FileSystemStorage
 from .forms import NewRecipe
 from .models import Recipes
@@ -49,4 +49,11 @@ def new_recipe(request):
 def all_recipes(request):
     recipes = Recipes.objects.all()
     return render(request, 'recipe_site_app/all_recipes.html', {'recipes': recipes})
+
+
+def all_user_recipes(request, author_id):
+    if author_id:
+        recipes = Recipes.objects.filter(
+            author=author_id).order_by('-date_of_publications')
+        return render(request, 'recipe_site_app/all_user_recipes.html', {'recipes': recipes})
 
