@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Все рецепты{% endblock %}
+
+
+{% block content %}
+<section >
+    
+        {% for recipe in recipes %}
+        <div container>
+            <hr />
+            <div >
+                <div >
+                    <p>Автор: {{ recipe.author }}</p>
+                </div>
+                <div >
+                      
+                     </a>
+                </div>
+                <div >
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div >
+                    <p>Последний просмотр: {{ recipe.date_of_update }}</p>
+                </div>
+                <hr >
+            </div>
+            <div >
+                <div class=>
+                    {% if recipe.picture %}
+                    <img src="{{ recipe_site_app.image.url }}"
+                         class="d-block " height="415px">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <h3>{{ recipe.title }}</h3>
+                    <p>{{ recipe.description }}</p>
+                    
+                      Подробнее
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
