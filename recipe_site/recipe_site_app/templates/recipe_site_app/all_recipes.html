@@ -3,42 +3,44 @@
 
 
 {% block content %}
-<section >
-    <div >
+<section class=>
+    <div class=>
         {% for recipe in recipes %}
-        <div >
-            <hr >
-            <div >
-                <div >
+        <div container>
+            <hr class=>
+            <div class=>
+                <div class=>
                     <p>Автор: {{ recipe.author }}</p>
                 </div>
-                <div >
+                <div class=>
                       <a href="{% url 'recipe_site_app:all_user_recipes' author_id=recipe.author.pk %}"
-                       > Все рецепты {{ recipe.author }}</a>
+                       class=> Все
+                        рецепты {{ recipe.author }}</a>
                 </div>
-                <div >
+                <div class=>
                     <p>Просмотров: {{ recipe.views }}</p>
                 </div>
-                <div >
+                <div class=>
                     <p>Последний просмотр: {{ recipe.date_of_update }}</p>
                 </div>
-                <hr >
+                <hr class=>
             </div>
-            <div >
-                <div >
+            <div class=>
+                <div class=>
                     {% if recipe.picture %}
                     <img src="{{ recipe_site_app.image.url }}"
-                          height="415px">
+                         class="d-block " height="415px">
                     {% else %}
                     <p>no image</p>
                     {% endif %}
 
                 </div>
-                <div >
+                <div class=>
                     <h3>{{ recipe.title }}</h3>
                     <p>{{ recipe.description }}</p>
-                    
-                     Подробнее</a>
+                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"
+                       > Подробнее</a>
+                   
                 </div>
 
             </div>
