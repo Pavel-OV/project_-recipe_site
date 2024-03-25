@@ -11,7 +11,10 @@ class NewRecipe(forms.ModelForm):
         fields = ['title_recipe', 'description', 'cooking_steps', 'category', 'cooking_time',
                   'ingredients', 'image']
         widgets = {
-            'title_recipe': TextInput(attrs={'size': 50}),
+            'title_recipe': TextInput(attrs={'size': 60}),
             'description': Textarea(attrs={'cols': 60, 'rows': 5}),
             'cooking_steps': Textarea(attrs={'cols': 60, 'rows': 7})}
 
+class RecipeSearchForm(forms.Form):
+    query = forms.CharField(label='Поиск по тексту', max_length=200, empty_value="", required=False,
+                            widget=forms.TextInput(attrs={"style": "width: 400px;"}))
