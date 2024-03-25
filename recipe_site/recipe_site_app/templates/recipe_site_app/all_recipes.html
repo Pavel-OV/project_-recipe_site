@@ -7,40 +7,43 @@
     <div class=>
         {% for recipe in recipes %}
         <div container>
-            <hr class=>
+            <hr >
             <div class=>
-                <div class=>
-                    <p>Автор: {{ recipe.author }}</p>
+                <div>
+                    <h2>Автор: {{ recipe.author }}</h2> 
                 </div>
-                <div class=>
-                      <a href="{% url 'recipe_site_app:all_user_recipes' author_id=recipe.author.pk %}"
-                       class=> Все
-                        рецепты {{ recipe.author }}</a>
+                <div >
+                     <p><a href="{% url 'recipe_site_app:all_user_recipes' author_id=recipe.author.pk %}"
+                     > Все  рецепты {{ recipe.author }}</a></p> 
                 </div>
-                <div class=>
-                    <p>Просмотров: {{ recipe.views }}</p>
-                </div>
-                <div class=>
-                    <p>Последний просмотр: {{ recipe.date_of_update }}</p>
-                </div>
+                
                 <hr class=>
             </div>
             <div class=>
                 <div class=>
-                    {% if recipe.picture %}
-                    <img src="{{ recipe_site_app.image.url }}"
-                         class="d-block " height="415px">
+                    {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}"
+                          height="200px">
                     {% else %}
                     <p>no image</p>
                     {% endif %}
 
                 </div>
+                
                 <div class=>
-                    <h3>{{ recipe.title }}</h3>
+                    <h3>{{ recipe.title_recipe }}</h3>
+                    <p></p>
                     <p>{{ recipe.description }}</p>
-                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"
-                       > Подробнее</a>
+                    
+                   <p><a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"
+                       > Подробнее</a></p> 
                    
+                </div>
+                <div class=>
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div class=>
+                    <p>Последний просмотр: {{ recipe.date_of_editing }}</p>
                 </div>
 
             </div>
