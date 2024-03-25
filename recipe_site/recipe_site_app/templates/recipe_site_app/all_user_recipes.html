@@ -4,11 +4,29 @@
 
 {% block content %}
 <section class=>
+    {{message}}
     <div class=>
         {% for recipe in recipes %}
         <div container>
-            <hr class=>
+            <hr />
             <div class=>
+                <div class=>
+                    <h2> {{ recipe.title_recipe }} мин.</h2>
+                </div>
+            </div>
+            <div class=>
+                <div class=>
+                    {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" >
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div>
+                    <p>{{ recipe.description }}</p>
+                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"> Подробнее</a>
+                </div>
                 <div class=>
                     <p>Время готовки: {{ recipe.cooking_time }} мин.</p>
                 </div>
@@ -16,24 +34,7 @@
                     <p>Просмотров: {{ recipe.views }}</p>
                 </div>
                 <div class=>
-                    <p>Обновлено: {{ recipe.date_of_editing}}</p>
-                </div>
-                <hr class=>
-            </div>
-            <div class=>
-                <div class=>
-                    {% if recipe.picture %}
-                    <img src="{{ recipe.image.url }}"
-                          height="415px">
-                    {% else %}
-                    <p>no image</p>
-                    {% endif %}
-
-                </div>
-                <div >
-                    <p>{{ recipe.description }}</p>
-                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"
-                        > Подробнее</a>
+                    <p>Последний просмотр: {{ recipe.date_of_editing}}</p>
                 </div>
 
             </div>
