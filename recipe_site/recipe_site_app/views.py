@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.core.files.storage import FileSystemStorage
-from .forms import NewRecipe
+from .forms import NewRecipe, RecipeSearchForm
 from .models import Recipes, Category
+from django.db.models import Q
 
 
 def index(request):
@@ -57,17 +58,20 @@ def all_user_recipes(request, author_id):
             author=author_id).order_by('-date_of_publications')
         return render(request, 'recipe_site_app/all_user_recipes.html', {'recipes': recipes})
 
+
 def user_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipes, pk=recipe_id)
     recipe.views += 1
     recipe.save()
-   
+
     title_category = Category.objects.filter().values_list('title_category', flat=True)
 
-    ingredients = Recipes.objects.filter(id=recipe_id).values_list("ingredients", flat=True)
+    ingredients = Recipes.objects.filter(
+        id=recipe_id).values_list("ingredients", flat=True)
 
     return render(request, 'recipe_site_app/user_recipe.html',
-                  {'recipe': recipe, 'title_category': title_category, 'ingredients': ingredients} )
+                  {'recipe': recipe, 'title_category': title_category, 'ingredients': ingredients})
+
 
 def update_recipe(request, recipe_id):
     recipe = Recipes.objects.filter(pk=recipe_id).first()
@@ -97,4 +101,58 @@ def update_recipe(request, recipe_id):
         form = NewRecipe(instance=recipe)
         message = 'внесите нужные исправления в рецепт'
         return render(request, 'recipe_site_app/update_recipe.html', {'form': form, 'message': message})
+
+
+def delete_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipes, pk=recipe_id)
+    recipe.delete()
+    message = 'Рецепт удален'
+    return render(request, 'recipe_site_app/user_recipe.html', {'message': message})
+
+
+def search(request):
+    categories = Category.objects.all()
+    ingredients = list(Recipes.objects.all())
+    form = RecipeSearchForm(request.GET)
+    message = None
+    if request.method == 'POST':
+        category_id = request.POST.get('category')
+        ingredient_id = request.POST.get('ingredients')
+        if category_id:
+            cat_name = get_object_or_404(Category, pk=category_id)
+            recipes = Recipes.objects.filter(category=cat_name)
+            search_ref = "категории"
+        elif ingredient_id:
+            cat_name = get_object_or_404(Recipes, pk=ingredient_id)
+            recipes = Recipes.objects.filter(ingredients=cat_name)
+            search_ref = "ингридиенту"
+        else:
+            return render(request, 'recipe_site_app/search.html',
+                          {'form': form, 'categories': categories, 'ingredients': ingredients})
+        if not recipes:
+            message = "ничего не найдено"
+        return render(request, 'recipe_site_app/search.html',
+                      {'recipes': recipes, 'cat_name': cat_name, 'search_ref': search_ref, 'categories': categories,
+                       'ingredients': ingredients, 'message': message, 'form': form, })
+
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        if query:
+            recipes = Recipes.objects.filter(
+                Q(title_recipe__iregex=query) |
+                Q(description__iregex=query) |
+                Q(cooking_steps__iregex=query))
+        else:
+            recipes = None
+        if not recipes:
+            message = "ничего не найдено"
+        cat_name = query
+        search_ref = ''
+        return render(request, 'recipe_site_app/search.html',
+                      {'recipes': recipes, 'cat_name': cat_name, 'search_ref': search_ref, 'categories': categories,
+                       'ingredients': ingredients, 'form': form, 'message': message})
+
+    return render(request, 'recipe_site_app/search.html',
+                  {'form': form, 'categories': categories, 'ingredients': ingredients, 'message': message})
+
 
