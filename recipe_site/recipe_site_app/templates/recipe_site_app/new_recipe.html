@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
 {% block title %}Добавить рецепт{% endblock %}
 {% block content %}
-<h3>Добавить новый рецепт</h3>
-        <form method="post" enctype="multipart/form-data">
-            <h3>{{ request.user }}</h3>
-            {% csrf_token %}
-            {{message}}
-          
-            {{form.as_p}}
 
-            <input type="submit" value="Создать рецепт">
+<h1 class="title">Добавить новый рецепт</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div>
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            {% for field in form %}
+
+            <h3>{{ field.label }}</h3>
+            <p></p> 
+            <p>{{ field }}</p>
+
+            {% if field.errors %}
+            <ul >
+                {{ field.errors }}
+            </ul>
+
+            {% endif %}
+            {% endfor %}
+            <button type="submit" >Создать рецепт</button>
+
         </form>
 
 
