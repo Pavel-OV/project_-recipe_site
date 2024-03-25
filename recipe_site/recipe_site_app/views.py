@@ -156,3 +156,16 @@ def search(request):
                   {'form': form, 'categories': categories, 'ingredients': ingredients, 'message': message})
 
 
+def search_category(request, cat):
+    message = None
+    categories = Category.objects.all()    
+    cat_id = get_object_or_404(Category, title_category=cat)
+    recipes = Recipes.objects.filter(category=cat_id.pk)
+    form = RecipeSearchForm(request.GET)
+    if not recipes:
+        message = "ничего не найдено"
+    search_ref = "категории"
+    return render(request, 'recipes/search.html', {'recipes': recipes, 'cat_name': cat,
+                                                   'search_ref': search_ref, 'categories': categories,
+                                                   'message': message, 'form': form, })
+
