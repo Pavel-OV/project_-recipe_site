@@ -263,6 +263,15 @@ hr {
 	width: 560px;
 	padding-top: 30px;
 }
+.carousel{
+	display: flex;
+	height: 400px;
+	overflow: hidden;
+}
+.carousel .img{
+	width: 50%;	
+	object-fit: cover;
+}
 .post {
 	background: url("/static/recipe_site_app/images//img04.gif") repeat-x left bottom;
 	margin: 0px 0px 30px 0px;
