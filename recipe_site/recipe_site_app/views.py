@@ -1,3 +1,4 @@
+from random import choices
 from django.shortcuts import get_object_or_404, render
 from django.core.files.storage import FileSystemStorage
 from .forms import NewRecipe, RecipeSearchForm
@@ -6,7 +7,17 @@ from django.db.models import Q
 
 
 def index(request):
-    return render(request, "recipe_site_app/index.html")
+    max_carussel_len = 5
+    pk_lst = Recipes.objects.exclude(image__exact='').values_list('id', flat=True)
+    if len(pk_lst) <= max_carussel_len:
+        pk_rnd = pk_lst
+    else:
+        pk_rnd = choices(pk_lst, k=5)
+    recipes_carussel = {}
+    for k, i in enumerate(pk_rnd):
+        recipes_carussel[f'set{k}'] = Recipes.objects.filter(pk=i)
+
+    return render(request, "recipe_site_app/index.html", {'recipes_carussel': recipes_carussel})
 
 
 def new_recipe(request):
