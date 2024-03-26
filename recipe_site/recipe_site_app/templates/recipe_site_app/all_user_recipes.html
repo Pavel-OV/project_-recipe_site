@@ -3,19 +3,20 @@
 
 
 {% block content %}
-<section class=>
-    {{message}}
+<section>
+    
+    <h1>Мои рецепты</h1>
     <div class=>
         {% for recipe in recipes %}
         <div container>
             <hr />
-            <div class=>
-                <div class=>
-                    <h2> {{ recipe.title_recipe }} мин.</h2>
+            <div >
+                <div >
+                    <h2> {{ recipe.title_recipe }}</h2>
                 </div>
             </div>
-            <div class=>
-                <div class=>
+            <div >
+                <div >
                     {% if recipe.image %}
                     <img src="{{ recipe.image.url }}" >
                     {% else %}

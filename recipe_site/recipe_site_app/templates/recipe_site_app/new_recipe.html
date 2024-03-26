@@ -2,7 +2,7 @@
 {% block title %}Добавить рецепт{% endblock %}
 {% block content %}
 
-<h1 class="title">Добавить новый рецепт</h1>
+<h1>Добавить новый рецепт</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% if form.non_field_errors %}
