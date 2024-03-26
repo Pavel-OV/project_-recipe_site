@@ -3,6 +3,47 @@
 {% block title %} Главная страница {% endblock %}
 
 {% block content %}
-<h1>ИНТЕРНЕТ МАГАЗИН</h1>
-<p>Разаработан на framework django</p>
+
+<section >
+    <div class="carousel">
+
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+
+            <div >
+                {% for key,value in recipes_carussel.items %}
+                {% for recipe in value %}
+                {% if key == 'set0' %}
+                <div class="carousel-item active" data-bs-interval="2000">
+                    {% else %}
+                    <div class="carousel-item" data-bs-interval="2000">
+                        {% endif %}
+                        <div>
+                            <div>
+                                <div>
+                                    <img src="{{ recipe.image.url }}"
+                                        >
+                                </div>
+                                <div>
+                                    <h3>{{ recipe.title_recipe  }}</h3>
+                                    <p class="card-text">{{ recipe.description }}</p>
+                                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"
+                                       class="btn btn-primary active me-4 "
+                                       role="button"
+                                       aria-pressed="true"> Смотреть </a>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+</section>
+
 {% endblock %}

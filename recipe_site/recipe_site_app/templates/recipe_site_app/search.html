@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Поиск по рецептам{% endblock %}
+
+
+{% block content %}
+<h1> {{ test }}</h1>
+<section >
+    <div>
+        <div>
+          
+            <div >
+                <div >
+                   <h2>Поиск по тексту: </h2>
+                    <form action="{% url 'recipe_site_app:search' %}" method="get">
+                        <div style="display: flex;">
+                        {{ form.as_div }}
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                             </div>
+                    </form>
+                </div>
+                <hr />
+                <div >
+                    <h2>Поиск по категориям: </h2>
+                    <form action="{% url 'recipe_site_app:search' %}" method="POST">
+                        {% csrf_token %}
+                        <select name="category">
+                            <option value="">Все категории</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.title_category }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+               
+
+            </div>
+            <hr >
+
+            {% if recipes %}
+            <h3>Результаты поиска по {{ search_ref }}: {{ cat_name }}</h3>
+
+            {% for recipe in recipes %}    
+
+
+            <hr >
+            <div >
+                <div>
+                    <h3>{{ recipe.title_recipe }}</h3>
+                    <p>Автор: {{ recipe.author }}</p>
+                </div>
+                <div>
+                    {% if recipe.author.pk %}
+                    <a href="{% url 'recipe_site_app:all_user_recipes' author_id=recipe.author.pk %}"
+                       > Все рецепты {{ recipe.author }}</a>
+                    {% endif %}
+                </div>
+                
+                <hr />
+            </div>
+            <div >
+                <div >
+                    {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div >
+                    <p>{{ recipe.description }}</p>
+                    {% if recipe.pk %}
+                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"
+                       > Подробнее</a>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

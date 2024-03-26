@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Рецепты по автору{% endblock %}
+
+
+{% block content %}
+<section>
+    
+    <h1>Мои рецепты</h1>
+    <div class=>
+        {% for recipe in recipes %}
+        <div container>
+            <hr />
+            <div >
+                <div >
+                    <h2> {{ recipe.title_recipe }}</h2>
+                </div>
+            </div>
+            <div >
+                <div >
+                    {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" >
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div>
+                    <p>{{ recipe.description }}</p>
+                    <a href="{% url 'recipe_site_app:user_recipe' recipe_id=recipe.pk %}"> Подробнее</a>
+                </div>
+                <div class=>
+                    <p>Время готовки: {{ recipe.cooking_time }} мин.</p>
+                </div>
+                <div class=>
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div class=>
+                    <p>Последний просмотр: {{ recipe.date_of_editing}}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

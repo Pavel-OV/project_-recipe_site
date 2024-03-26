@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Подробности рецепта{% endblock %}
+
+
+{% block content %}
+<section>
+    <div>
+        {% if message %}
+        <div>
+            {{ message }}
+        </div>
+        {% endif %}
+        <div>
+            <hr />
+            <div>
+
+                <h2> {{ recipe.title_recipe }}</h2>
+                <p>{{ recipe.description }}</p>
+                <p></p>
+                <div>
+                    <p>Игридиенты:</p>
+
+                    {% for ingredient in ingredients %}
+                    <h5>{{ ingredient }}</h5>
+                    {% endfor %}
+
+                </div>
+                <div>
+                    <p></p>
+                    <p>Время приготовления: {{ recipe.cooking_time }} мин.</p>
+                </div>                
+                <hr />
+            </div>
+            <div>
+                <div>
+                    {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div>
+                    <h3>{{ recipe.title}}</h3>
+                    <p>{{ recipe.cooking_steps|linebreaksbr }}</p>
+                    {% if user.is_authenticated %}
+                    {% if recipe.author.pk == request.user.pk %}
+                    <a href="{% url 'recipe_site_app:update_recipe' recipe_id=recipe.pk %}"
+                        class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Редактировать</a>
+                    <a href="{% url 'recipe_site_app:delete_recipe' recipe_id=recipe.pk %}"
+                        class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Удалить</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

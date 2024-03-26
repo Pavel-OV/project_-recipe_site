@@ -1,31 +1,35 @@
-
-from django.contrib.auth.views import LoginView
 from multiprocessing import AuthenticationError
-from django.urls import  reverse_lazy
+from django.contrib.auth.views import LoginView
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.contrib.auth.models import Group
 
-class LoginUser(LoginView):
-    form = AuthenticationError
+from users.forms import LoginFormUser, RegistrationForm
+
+class MyLoginView(LoginView):
+    authentication_form = LoginFormUser
     template_name = 'users/login.html'
-    extra_context = {'title': "Авторизация"}
+    extra_context = {'title': 'Авторизация на сайте'}
 
     def get_success_url(self):
         return reverse_lazy('recipe_site_app:index')
 
-# def login_user(request):
-#     if request.method == 'POST':
-#         form = LoginUserForm(request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             user = authenticate(
-#                 request, username=cd['username'], password=cd['password'])
-#             if user and user.is_active:
-#                 login(request, user)
-#                 return HttpResponseRedirect(reverse('recipe_site_app:index'))
-#     else:
-#         form = LoginUserForm()
-#     return render(request, 'users/login.html', {'form': form})
+class RegistrationView(CreateView):
+    form_class = RegistrationForm
+    template_name = 'users/registration.html'
+    extra_context = {'title': 'Регистрация на сайте'}
 
+    def get_success_url(self):
+        return reverse_lazy('users:login')
 
-# def logout_user(request):
-#     logout(request)
-#     return HttpResponseRedirect(reverse('recipe_site_app:index'))
+    def form_valid(self, form):
+        user = form.save()
+        group = Group.objects.get(name='Кулинары')
+        user.groups.add(group)
+        return super().form_valid(form)
+
+class LoginUser(LoginView):
+    form_class = AuthenticationError
+    template_name = 'users/login.html'
+    extra_context = {'title': "Авторизация"}
+
