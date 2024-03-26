@@ -6,8 +6,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %} Шаблон сайта кулинарных рецептов {% endblock %}</title>
+  <link href="{% static 'recipe_site_app/css/bootstrap.min.css' %}" rel="stylesheet">
+  <script src="{% static 'recipe_site_app/js/bootstrap.bundle.js' %}"></script>
+  <script src="{% static 'recipe_site_app/js/bootstrap.js' %}"></script>
+  <script src="{% static 'recipe_site_app/js/bootstrap.min.js' %}"></script>
   <link href="{% static 'recipe_site_app/css/styles.css' %}" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body>
@@ -15,36 +18,26 @@
     <div id="header">
       <div id="logo">
         {% if user.is_authenticated %}
-        <p>Приветствуем: <b> {{ request.user }}</b>
-        </p>
-        {% else %}
-        <h1><a href="{% url 'recipe_site_app:index' %}">Кулинар</a></h1>
-        {% endif %}
+        <h2>Приветствуем:</h2>
+        <h2>{{ request.user }}</h2>
+          {% else %}
+          <h1><a href="{% url 'recipe_site_app:index' %}">Кулинар</a></h1>
+          {% endif %}
       </div>
       <!-- end div#logo -->
-
     </div>
     <div id="menu">
       <ul>
-
-        
-        <li><a href="{% url 'recipe_site_app:index' %}">Все рецепты</a></li>
-
         {% if user.is_authenticated %}
-        <li><a href="#">Мои рецепты</a></li>
-        <li><a href="#">Обновить профиль</a></li>
-        <li class="nav-item list-unstyled ">
-          <form method="post" action="{% url 'users:logout' %}">
-            {% csrf_token %}
-            <button class="btn btn-primary active me-4 " type="submit"> Выйти</button>
-        </form>
-
-      </li>
-
+          <li><a href="{% url 'recipe_site_app:all_user_recipes' author_id=request.user.pk %}" role="button"
+              aria-pressed="true">Мои рецепты</a></li>
+          <li><a href="{% url 'recipe_site_app:new_recipe' %}">Добавить рецепт</a></li>
+          <li> <a href="{% url 'recipe_site_app:search' %}">Поиск</a></li>
         {% else %}
-        
-        <li><a class="btn btn-primary active me-4 " role="button" aria-pressed="true" href="{% url 'users:login' %}">
-          Войти </a></li>
+          <li><a href="{% url 'recipe_site_app:all_recipes' %}">Все рецепты</a></li>
+          <li> <a href="{% url 'recipe_site_app:search' %}">Поиск</a></li>
+          <li><a href="{% url 'users:registration' %}"> Регистрация </a></li>
+          <li><a href="{% url 'users:login' %}"> Войти </a></li>
         {% endif %}
 
       </ul>
@@ -54,86 +47,48 @@
 
     <div id="page">
       <div id="page-bgtop">
+        <br>
         <div id="content">
           <div class="post">
-            <h2 class="title"><a href="#">Lorem Ipsum Dolor Volutpat</a></h2>
-            <p class="byline">Posted by FreeCssTemplates</p>
+            {% block content %} {% endblock %}
             <div class="entry">
-              {% block content %} {% endblock %}
-              <p>This is <strong>Culinary</strong>, a free, fully standards-compliant CSS template designed by ,
-                released for free under the license. The photo used in this template is from . You're free to use this
-                template for anything as long as you link back to . Enjoy :)</p>
             </div>
             <div class="meta">
-              <p class="links"><a href="#" class="comments">Comments (32)</a></p>
+              <p class="links"><a href="#" class="comments"></a></p>
             </div>
-          </div>
-          <div class="post">
-
-
-            <div class="post">
-
-            </div>
-          </div>
-          <div class="post">
-
-          </div>
+          </div>        
         </div>
         <!-- end div#content -->
-        <button class="btn btn-primary my-btn dropdown-toggle me-3" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Войти
-            </button>
-            <div id="sidebar">
+
+        <div id="sidebar">
           {% if user.is_authenticated %}
           <div>
             <button class="btn btn-primary my-btn dropdown-toggle me-3" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               {{ request.user }}
             </button>
-            <ul class="dropdown-menu dd-color">
-              <li><a class="dropdown-item dd-item-color" href="{% url 'users:logout' %}">Выйти</a></li>
-            </ul>
+            <li class="nav-item list-unstyled ">
+              <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-primary active me-4 " type="submit"> Выйти</button>
+              </form>
+              <ul class="dropdown-menu dd-color">
+              </ul>
           </div>
           {% else %}
-          <li class="nav-item">
-            <button class="btn btn-primary my-btn dropdown-toggle me-3" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Войти
-            </button>
-            <a class="nav-link btn btn-primary my-btn me-3" href="{% url 'users:login' %}">Войти</a>
-          </li>
+
           {% endif %}
           <ul>
-            <li id="search">
-              <h2 class="search">Поиск</h2>
-              <form method="get" action="">
-                <fieldset>
-                  <input type="text" id="search-text" name="s" value="" />
-                  <input type="submit" id="search-submit" value="поиск" />
-                </fieldset>
-              </form>
-            </li>
             <li>
-              <h2 class="categories">Lorem Ipsum</h2>
-              <ul>
-                <li><a href="#">Fusce dui neque fringilla</a></li>
-                <li><a href="#">Eget tempor eget nonummy</a></li>
-                <li><a href="#">Magna lacus bibendum mauris</a></li>
-                <li><a href="#">Nec metus sed donec</a></li>
-                <li><a href="#">Magna lacus bibendum mauris</a></li>
-                <li><a href="#">Velit semper nisi molestie</a></li>
-                <li><a href="#">Eget tempor eget nonummy</a></li>
-              </ul>
+              <h2 class="categories">Полезные ссылки</h2></li>
+              {% if user.is_authenticated %}               
+                  <li><a class="nav-link btn btn-primary my-btn me-3" href="{% url 'recipe_site_app:all_recipes' %}">Все рецепты</a></li>
+               
+              {% else %}
+            <li class="nav-item">
+              <a class="nav-link btn btn-primary my-btn me-3" href="{% url 'users:login' %}">Войти</a>
             </li>
-            <li>
-              <h2>Volutpat Dolore</h2>
-
-            </li>
-            <li>
-              <h2>Bebindum Mauris </h2>
-
-            </li>
+            {% endif %}           
           </ul>
         </div>
         <!-- end div#sidebar -->
@@ -142,7 +97,7 @@
     </div>
     <!-- end div#page -->
     <div id="footer">
-      <p><a href="#"></a>.&nbsp;&nbsp;<a href="#"></a><a href="#"></a></p>
+      <p><a href="#"></a>.&nbsp;&nbsp;<a href="#"></a><a href="#">Copyright Pavel Zhukov. 2024</a></p>
     </div>
     <!-- end div#footer -->
   </div>
