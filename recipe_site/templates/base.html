@@ -18,7 +18,7 @@
     <div id="header">
       <div id="logo">
         {% if user.is_authenticated %}
-        <h2>Приветствуем:</h2>
+        <h2><a href="{% url 'recipe_site_app:index' %}">Приветствуем</a></h2>
         <h2>{{ request.user }}</h2>
           {% else %}
           <h1><a href="{% url 'recipe_site_app:index' %}">Кулинар</a></h1>
