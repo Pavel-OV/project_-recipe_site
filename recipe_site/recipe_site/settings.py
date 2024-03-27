@@ -25,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-d&g+l=si64+@diirn&io^f=fxrz+a$3mwc!k5zt$xhhvm-%ms2'
 SECRET_KEY = os.getenv('SECRET_KEY')
-
-if os.environ.get("DEBUG") == "False":
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG'))
+# if os.environ.get("DEBUG") == "False":
+#     DEBUG = False
+# else:
+#     DEBUG = True
 CSRF_TRUSTED_ORIGINS = []
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -141,6 +141,7 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR/ 'ctatic/'
 STATIC_DIRS = [
     os.path.join(BASE_DIR,'static' )
 # LOGIN_URL
