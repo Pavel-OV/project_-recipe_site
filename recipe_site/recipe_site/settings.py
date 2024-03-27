@@ -25,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-d&g+l=si64+@diirn&io^f=fxrz+a$3mwc!k5zt$xhhvm-%ms2'
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = bool(os.environ.get('DEBUG'))
-# if os.environ.get("DEBUG") == "False":
-#     DEBUG = False
-# else:
-#     DEBUG = True
+# DEBUG = bool(os.environ.get('DEBUG'))
+if os.environ.get("DEBUG") == "False":
+    DEBUG = False
+else:
+    DEBUG = True
 CSRF_TRUSTED_ORIGINS = []
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -90,18 +90,18 @@ WSGI_APPLICATION = 'recipe_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {  
-    "default": {  
-        "ENGINE": "django.db.backends.mysql",  
-        "NAME": os.getenv("MYSQL_DBNAME"),  
-        "USER": os.getenv("MYSQL_USER"),  
-        "PASSWORD": os.getenv("MYSQL_PASSWORD"),  
-        "HOST": os.getenv("MYSQL_HOST"),  
-        "OPTIONS": {  
-            "init_command": "SET NAMES 'utf8mb4';SET sql_mode = 'STRICT_TRANS_TABLES'",  
-            "charset": "utf8mb4",  
-        },  
-    }  
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("MYSQL_DBNAME"),
+        "USER": os.getenv("MYSQL_USER"),
+        "PASSWORD": os.getenv("MYSQL_PASSWORD"),
+        "HOST": os.getenv("MYSQL_HOST"),
+        "OPTIONS": {
+            "init_command": "SET NAMES 'utf8mb4';SET sql_mode = 'STRICT_TRANS_TABLES'",
+            "charset": "utf8mb4",
+        },
+    }
 }
 
 # Password validation
@@ -141,17 +141,16 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR/ 'ctatic/'
+STATIC_ROOT = BASE_DIR / 'ctatic/'
 STATIC_DIRS = [
-    os.path.join(BASE_DIR,'static' )
-# LOGIN_URL
-# LOGOUT_REDIRECT_URL = 'recipe_site_app:index'
+    os.path.join(BASE_DIR, 'static')
+    # LOGIN_URL
+    # LOGOUT_REDIRECT_URL = 'recipe_site_app:index'
 
-# LOGOUT_REDIRECT_URL = 'recipe_site_app:index'
+    # LOGOUT_REDIRECT_URL = 'recipe_site_app:index'
 
 ]
 # Default primary key field type'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
