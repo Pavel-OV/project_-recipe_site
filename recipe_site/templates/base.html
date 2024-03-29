@@ -18,28 +18,27 @@
     <div id="header">
       <div id="logo">
         {% if user.is_authenticated %}
-        <h2><a href="{% url 'recipe_site_app:index' %}">Приветствуем</a></h2>
-        <h2>{{ request.user }}</h2>
-          {% else %}
+          <h2><a href="{% url 'recipe_site_app:index' %}">Приветствуем</a></h2>
+          <h2>{{ request.user }}</h2>
+        {% else %}
           <h1><a href="{% url 'recipe_site_app:index' %}">Кулинар</a></h1>
-          {% endif %}
+        {% endif %}
       </div>
       <!-- end div#logo -->
     </div>
     <div id="menu">
       <ul>
         {% if user.is_authenticated %}
-          <li><a href="{% url 'recipe_site_app:all_user_recipes' author_id=request.user.pk %}" role="button"
-              aria-pressed="true">Мои рецепты</a></li>
-          <li><a href="{% url 'recipe_site_app:new_recipe' %}">Добавить рецепт</a></li>
-          <li> <a href="{% url 'recipe_site_app:search' %}">Поиск</a></li>
+        <li><a href="{% url 'recipe_site_app:all_user_recipes' author_id=request.user.pk %}" role="button"
+            aria-pressed="true">Мои рецепты</a></li>
+        <li><a href="{% url 'recipe_site_app:new_recipe' %}">Добавить рецепт</a></li>
+        <li> <a href="{% url 'recipe_site_app:search' %}">Поиск</a></li>
         {% else %}
-          <li><a href="{% url 'recipe_site_app:all_recipes' %}">Все рецепты</a></li>
-          <li> <a href="{% url 'recipe_site_app:search' %}">Поиск</a></li>
-          <li><a href="{% url 'users:registration' %}"> Регистрация </a></li>
-          <li><a href="{% url 'users:login' %}"> Войти </a></li>
+        <li><a href="{% url 'recipe_site_app:all_recipes' %}">Все рецепты</a></li>
+        <li> <a href="{% url 'recipe_site_app:search' %}">Поиск</a></li>
+        <li><a href="{% url 'users:registration' %}"> Регистрация </a></li>
+        <li><a href="{% url 'users:login' %}"> Войти </a></li>
         {% endif %}
-
       </ul>
     </div>
     <!-- end div#menu -->
@@ -56,10 +55,9 @@
             <div class="meta">
               <p class="links"><a href="#" class="comments"></a></p>
             </div>
-          </div>        
+          </div>
         </div>
         <!-- end div#content -->
-
         <div id="sidebar">
           {% if user.is_authenticated %}
           <div>
@@ -80,15 +78,16 @@
           {% endif %}
           <ul>
             <li>
-              <h2 class="categories">Полезные ссылки</h2></li>
-              {% if user.is_authenticated %}               
-                  <li><a class="nav-link btn btn-primary my-btn me-3" href="{% url 'recipe_site_app:all_recipes' %}">Все рецепты</a></li>
-               
-              {% else %}
+              <h2 class="categories">Полезные ссылки</h2>
+            </li>
+            {% if user.is_authenticated %}
+            <li><a class="nav-link btn btn-primary my-btn me-3" href="{% url 'recipe_site_app:all_recipes' %}">Все
+                рецепты</a></li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link btn btn-primary my-btn me-3" href="{% url 'users:login' %}">Войти</a>
             </li>
-            {% endif %}           
+            {% endif %}
           </ul>
         </div>
         <!-- end div#sidebar -->
