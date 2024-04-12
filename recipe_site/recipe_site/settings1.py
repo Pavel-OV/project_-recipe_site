@@ -23,16 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d&g+l=si64+@diirn&io^f=fxrz+a$3mwc!k5zt$xhhvm-%ms2'
-#SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-d&g+l=si64+@diirn&io^f=fxrz+a$3mwc!k5zt$xhhvm-%ms2'
+SECRET_KEY = os.getenv('SECRET_KEY')
 # DEBUG = bool(os.environ.get('DEBUG'))
-# if os.environ.get("DEBUG") == "False":
-#     DEBUG = False
-# else:
-#     DEBUG = True
+if os.environ.get("DEBUG") == "False":
+    DEBUG = False
+else:
+    DEBUG = True
 CSRF_TRUSTED_ORIGINS = []
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 SESSION_COOKIE_SECURE = True 
 CSRF_COOKIE_SECURE = True
 ALLOWED_HOSTS = ["127.0.0.1", 
@@ -90,26 +90,19 @@ WSGI_APPLICATION = 'recipe_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("MYSQL_DBNAME"),
+        "USER": os.getenv("MYSQL_USER"),
+        "PASSWORD": os.getenv("MYSQL_PASSWORD"),
+        "HOST": os.getenv("MYSQL_HOST"),
+        "OPTIONS": {
+            "init_command": "SET NAMES 'utf8mb4';SET sql_mode = 'STRICT_TRANS_TABLES'",
+            "charset": "utf8mb4",
+        },
     }
 }
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": os.getenv("MYSQL_DBNAME"),
-#         "USER": os.getenv("MYSQL_USER"),
-#         "PASSWORD": os.getenv("MYSQL_PASSWORD"),
-#         "HOST": os.getenv("MYSQL_HOST"),
-#         "OPTIONS": {
-#             "init_command": "SET NAMES 'utf8mb4';SET sql_mode = 'STRICT_TRANS_TABLES'",
-#             "charset": "utf8mb4",
-#         },
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
